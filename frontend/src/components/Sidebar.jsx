@@ -3,7 +3,7 @@ import { useUser, useClerk } from '@clerk/clerk-react';
 import arrowLeftIcon from '../assets/arrow-left.svg';
 import arrowRightIcon from '../assets/arrow-right.svg';
 import './Sidebar.css';
-import logoPreta from '../assets/images/Logo-branca.png';
+import logoPreta from '../assets/images/logo-branca.svg';
 import comunidadeIcon from '../assets/images/comunidade.svg';
 import mapeamentoIcon from '../assets/images/mapeamento-da-mente.svg';
 import contratoIcon from '../assets/images/contrato.svg';

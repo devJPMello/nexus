@@ -1,7 +1,7 @@
 import React from "react";
 import { SignIn } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import logoWhite from "../assets/images/logo-branca.png";
+import logoWhite from "../assets/images/logo-branca.svg";
 import "./login.css";
 
 const LoginScreen = () => {

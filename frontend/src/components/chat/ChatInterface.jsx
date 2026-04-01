@@ -12,7 +12,7 @@ import Summaries from './Summaries';
 import apiService from '../../services/api';
 import { getBackendAgentType, getFrontendAgentId } from '../../constants/agentTypes';
 import './ChatInterface.css';
-import historyIcon from '../../assets/images/historia.png';
+import historyIcon from '../../assets/images/historia.svg';
 
 const parseTimestamp = (value) => {
   if (!value) return null;

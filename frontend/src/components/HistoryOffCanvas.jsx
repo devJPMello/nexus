@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import historyIcon from '../assets/images/historia.png';
+import historyIcon from '../assets/images/historia.svg';
 import { getFrontendAgentId } from '../constants/agentTypes';
 import './HistoryOffCanvas.css';
 

@@ -1,4 +1,4 @@
-import logoBranca from '../../assets/images/Logo-branca.png';
+import logoBranca from '../../assets/images/logo-branca.svg';
 import './LogoLoader.css';
 
 const LogoLoader = () => {

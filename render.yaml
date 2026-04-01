@@ -1,41 +1,55 @@
-# Render.com configuration for monorepo
-# Deploy from develop branch (configure in Render dashboard)
+# Render Blueprint — monorepo Nexus
+# Dashboard: New → Blueprint → escolher repo → este ficheiro na raiz.
+# Branch: definir ao criar o serviço (main / develop).
+# Não defina PORT: o Render injeta process.env.PORT; Nest usa em backend/src/main.ts.
 
 services:
-  # Backend Service
   - type: web
     name: nexus-backend
-    env: node
+    runtime: node
     region: oregon
     plan: starter
-    buildCommand: cd backend && npm ci && npm run build
-    startCommand: cd backend && npm run start:prod
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:prod
+    buildFilter:
+      paths:
+        - backend/**
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3000
+      - key: NODE_VERSION
+        value: "20"
       - key: DATABASE_URL
-        sync: false  # Configure in Render dashboard
+        sync: false
       - key: GEMINI_API_KEY
-        sync: false  # Configure in Render dashboard
+        sync: false
       - key: GEMINI_MODEL
         value: gemini-1.5-flash
       - key: DB_SSL
         value: "true"
-    healthCheckPath: /
-    
-  # Frontend Service
+      - key: CORS_ORIGINS
+        sync: false
+        # Após deploy: https://nexus-frontend.onrender.com,http://localhost:5173
+
   - type: web
     name: nexus-frontend
-    env: static
+    runtime: static
     region: oregon
     plan: starter
-    buildCommand: cd frontend && npm ci && npm run build
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
     staticPublishPath: ./frontend/dist
+    buildFilter:
+      paths:
+        - frontend/**
     envVars:
       - key: VITE_API_URL
-        value: https://nexus-backend.onrender.com  # Update with your backend URL
+        value: https://nexus-backend.onrender.com
+        # Após 1.º deploy do backend: substituir pela URL real (HTTPS, sem barra final)
+      - key: VITE_CLERK_PUBLISHABLE_KEY
+        sync: false
     routes:
       - type: rewrite
         source: /*

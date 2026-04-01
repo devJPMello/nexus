@@ -1,12 +1,17 @@
 // Serviço de API para comunicação com o backend
-// Produção no mesmo host (Railway): URLs relativas. Dev: VITE_API_URL ou localhost.
-const API_BASE_URL =
-  typeof import.meta.env.VITE_API_URL === 'string' &&
-  import.meta.env.VITE_API_URL.length > 0
-    ? import.meta.env.VITE_API_URL
-    : import.meta.env.DEV
-      ? 'http://localhost:3000'
-      : '';
+// Produção (Render, etc.): VITE_API_URL = URL HTTPS do backend. Dev: localhost.
+function resolveApiBaseUrl() {
+  const raw = import.meta.env.VITE_API_URL;
+  if (typeof raw === 'string' && raw.trim().length > 0) {
+    return raw.trim().replace(/\/+$/, '');
+  }
+  if (import.meta.env.DEV) {
+    return 'http://localhost:3000';
+  }
+  return '';
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 class ApiService {
 
