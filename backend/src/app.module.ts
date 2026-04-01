@@ -2,6 +2,7 @@ import { Module, Logger } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { parse as parseDatabaseUrl } from 'pg-connection-string';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -54,10 +55,25 @@ const buildDatabaseConfig = (): TypeOrmModuleOptions => {
         : `${databaseUrl.slice(0, 24)}...`;
     logger.log(`DATABASE_URL (preview): ${preview}`);
 
-    // URL única: driver `pg` faz o parse (passwords com caracteres especiais, etc.)
+    // Parser do `pg`: separa o nome da base dos query params (?sslmode=… do Neon, etc.).
+    // Só `url` no TypeORM pode meter `neondb?sslmode=require` no campo database.
+    const parsed = parseDatabaseUrl(databaseUrl, { useLibpqCompat: true });
+    if (!parsed.host) {
+      throw new Error('DATABASE_URL inválida: host em falta.');
+    }
+    if (!parsed.database) {
+      throw new Error('DATABASE_URL inválida: nome da base (path) em falta.');
+    }
+
+    const port = parsed.port ? parseInt(String(parsed.port), 10) : 5432;
+
     return {
       ...baseConfig,
-      url: databaseUrl,
+      host: parsed.host,
+      port: Number.isFinite(port) ? port : 5432,
+      username: parsed.user ?? undefined,
+      password: parsed.password ?? undefined,
+      database: parsed.database,
     };
   }
 
