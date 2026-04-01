@@ -1,0 +1,15 @@
+# Nexus: backend NestJS usa o pacote `canvas` (binários nativos).
+# Estas libs evitam falha do `npm ci` / build no ambiente Linux do Railway (Nixpacks).
+
+[phases.setup]
+aptPkgs = [
+  "libcairo2-dev",
+  "libpango1.0-dev",
+  "libpangocairo-1.0-dev",
+  "libjpeg-dev",
+  "libgif-dev",
+  "librsvg2-dev",
+  "pkg-config",
+  "python3",
+  "build-essential",
+]

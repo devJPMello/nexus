@@ -1,0 +1,940 @@
+.settings-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.settings-modal.open {
+  pointer-events: auto;
+}
+
+.settings-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.settings-modal.open .settings-overlay {
+  opacity: 1;
+}
+
+.settings-modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  height: 85vh;
+  min-height: 600px;
+  max-height: 85vh;
+  background: #1e212e;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: row;
+  transform: scale(0.95) translateY(20px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border: 1px solid rgba(61, 65, 82, 0.5);
+}
+
+.settings-modal.open .settings-modal-container {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Sidebar */
+.settings-sidebar {
+  width: 260px;
+  background: #252836;
+  border-right: 1px solid rgba(61, 65, 82, 0.6);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.settings-close-button {
+  width: 32px;
+  height: 32px;
+  margin: 0 12px 20px 12px;
+  border: none;
+  background: transparent;
+  color: #b8b8b8;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.settings-close-button:hover {
+  background: rgba(148, 163, 184, 0.15);
+  color: #f8fafc;
+}
+
+.settings-close-button:active {
+  transform: scale(0.95);
+}
+
+.settings-close-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.settings-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 8px;
+}
+
+.settings-category-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #b8b8b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.settings-category-item:hover {
+  background: rgba(148, 163, 184, 0.1);
+  color: #f8fafc;
+}
+
+.settings-category-item.active {
+  background: rgba(47, 50, 65, 0.8);
+  color: #f8fafc;
+}
+
+.settings-category-item.active:hover {
+  background: rgba(47, 50, 65, 0.9);
+}
+
+.settings-category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.settings-category-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.settings-category-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Área de conteúdo */
+.settings-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e212e;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.settings-content-header {
+  padding: 28px 32px;
+  border-bottom: 1px solid rgba(61, 65, 82, 0.6);
+  flex-shrink: 0;
+}
+
+.settings-content-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.settings-content-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 32px;
+  background: rgba(17, 20, 29, 0.4);
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+}
+
+/* Quando a seção de conta está ativa, remover padding e overflow para o Clerk preencher */
+.settings-content-body.account-mode {
+  padding: 0;
+  overflow: hidden;
+}
+
+.settings-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 0;
+  color: rgba(226, 232, 240, 0.6);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.settings-account-section {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.settings-general-section {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-section-card {
+  padding: 24px;
+  background: rgba(47, 50, 65, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(61, 65, 82, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-section-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.settings-section-description {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.settings-section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-select {
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 16px;
+  background: rgba(47, 50, 65, 0.6);
+  border: 1px solid rgba(61, 65, 82, 0.6);
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-select:hover {
+  border-color: rgba(91, 141, 239, 0.5);
+  background: rgba(47, 50, 65, 0.8);
+}
+
+.settings-select:focus {
+  outline: none;
+  border-color: #5b8def;
+  box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.1);
+}
+
+.settings-select option {
+  background: #1e212e;
+  color: #f8fafc;
+}
+
+.settings-primary-button,
+.settings-danger-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: fit-content;
+}
+
+.settings-primary-button {
+  background: #5b8def;
+  color: #f8fafc;
+}
+
+.settings-primary-button:hover {
+  background: #4a7bc8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 141, 239, 0.3);
+}
+
+.settings-primary-button:active {
+  transform: translateY(0);
+}
+
+.settings-danger-button {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.settings-danger-button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.settings-danger-button:active {
+  transform: translateY(0);
+}
+
+.settings-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.settings-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(38, 41, 56, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(61, 65, 82, 0.4);
+}
+
+.settings-info-label {
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.settings-info-value {
+  font-size: 1rem;
+  color: #f8fafc;
+  font-weight: 500;
+}
+
+.settings-security-section {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.security-privacy-info {
+  padding: 20px;
+  background: rgba(47, 50, 65, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(61, 65, 82, 0.6);
+}
+
+.security-section-title {
+  margin: 0 0 16px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.security-description {
+  margin: 12px 0;
+  color: rgba(226, 232, 240, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.security-download-section {
+  margin-top: 8px;
+}
+
+.security-download-card {
+  padding: 24px;
+  background: rgba(47, 50, 65, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(61, 65, 82, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.security-download-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.security-download-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.security-download-description {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.security-download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: #5b8def;
+  color: #f8fafc;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 400px;
+}
+
+.security-download-button:hover {
+  background: #4a7bc8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 141, 239, 0.3);
+}
+
+.security-download-button:active {
+  transform: translateY(0);
+}
+
+.security-download-button svg {
+  flex-shrink: 0;
+}
+
+/* Scrollbar styling para sidebar */
+.settings-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+
+.settings-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.3);
+}
+
+/* Scrollbar styling para conteúdo */
+.settings-content-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-content-body::-webkit-scrollbar-track {
+  background: rgba(38, 41, 56, 0.5);
+  border-radius: 4px;
+}
+
+.settings-content-body::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+
+.settings-content-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Estilos específicos para limitar o Clerk dentro do modal */
+.settings-account-section > * {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* Garantir que elementos do Clerk não ultrapassem os limites */
+.settings-account-section [class*="cl-"] {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Limitar tabelas e elementos largos do Clerk */
+.settings-account-section table,
+.settings-account-section [class*="cl-table"],
+.settings-account-section [class*="cl-form"] {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+}
+
+/* Garantir que o container principal do Clerk respeite os limites */
+.settings-account-section .cl-rootBox,
+.settings-account-section .cl-card {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Garantir que elementos internos do Clerk também respeitem */
+.settings-account-section .cl-page {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  background-color: rgba(17, 20, 29, 0.4) !important;
+}
+
+/* Ajustar cor da navbar lateral do Clerk */
+.settings-account-section .cl-navbar {
+  background-color: rgba(17, 20, 29, 0.4) !important;
+  background: rgba(17, 20, 29, 0.4) !important;
+}
+
+/* Remover fundo branco padrão do Clerk nos elementos internos da navbar */
+.settings-account-section .cl-navbar > *,
+.settings-account-section .cl-navbarHeader,
+.settings-account-section .cl-navbarContent {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Remover fundo branco do header da navbar */
+.settings-account-section .cl-navbar .cl-navbarHeader,
+.settings-account-section .cl-navbarHeader {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: #f8fafc !important;
+}
+
+/* Ajustar título "Account" na navbar */
+.settings-account-section .cl-navbar .cl-navbarTitle,
+.settings-account-section .cl-navbarTitle,
+.settings-account-section .cl-navbar h2,
+.settings-account-section .cl-navbar h1,
+.settings-account-section .cl-navbar [class*="Title"] {
+  color: #f8fafc !important;
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Ajustar perfil do usuário na navbar do Clerk para seguir cores do projeto */
+.settings-account-section .cl-userButton,
+.settings-account-section .cl-userPreview,
+.settings-account-section .cl-userButtonBox,
+.settings-account-section .cl-userButtonTrigger {
+  background-color: rgba(47, 50, 65, 0.6) !important;
+  color: #f8fafc !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+}
+
+.settings-account-section .cl-userButton:hover,
+.settings-account-section .cl-userPreview:hover,
+.settings-account-section .cl-userButtonBox:hover,
+.settings-account-section .cl-userButtonTrigger:hover {
+  background-color: rgba(47, 50, 65, 0.8) !important;
+}
+
+.settings-account-section .cl-userButtonTextContainer,
+.settings-account-section .cl-userPreviewTextContainer {
+  color: #f8fafc !important;
+}
+
+.settings-account-section .cl-userButtonMainIdentifier,
+.settings-account-section .cl-userPreviewMainIdentifier,
+.settings-account-section .cl-userButtonName,
+.settings-account-section .cl-userPreviewName {
+  color: #f8fafc !important;
+}
+
+.settings-account-section .cl-userButtonSecondaryIdentifier,
+.settings-account-section .cl-userPreviewSecondaryIdentifier,
+.settings-account-section .cl-userButtonEmailAddress,
+.settings-account-section .cl-userPreviewEmailAddress {
+  color: #b8b8b8 !important;
+}
+
+.settings-account-section .cl-avatarBox,
+.settings-account-section .cl-avatarImage {
+  background: linear-gradient(135deg, #5b8def 0%, #8b5cf6 100%) !important;
+  border-color: rgba(91, 141, 239, 0.3) !important;
+  box-shadow: 0 0 15px rgba(91, 141, 239, 0.3) !important;
+}
+
+.settings-account-section .cl-avatarImage img {
+  border-color: rgba(91, 141, 239, 0.3) !important;
+}
+
+/* Remover qualquer fundo branco do perfil do usuário na navbar */
+.settings-account-section .cl-navbar .cl-userButton,
+.settings-account-section .cl-navbar .cl-userPreview,
+.settings-account-section .cl-navbar .cl-userButtonBox,
+.settings-account-section .cl-navbar .cl-userButtonTrigger,
+.settings-account-section .cl-navbar [class*="user"] {
+  background-color: rgba(47, 50, 65, 0.6) !important;
+  color: #f8fafc !important;
+}
+
+.settings-account-section .cl-navbar .cl-userButton:hover,
+.settings-account-section .cl-navbar .cl-userPreview:hover {
+  background-color: rgba(47, 50, 65, 0.8) !important;
+}
+
+/* Garantir que o container do perfil na navbar não tenha fundo branco */
+.settings-account-section .cl-navbar > *:first-child,
+.settings-account-section .cl-navbar [class*="userButton"],
+.settings-account-section .cl-navbar [class*="userPreview"] {
+  background-color: rgba(47, 50, 65, 0.6) !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+}
+
+/* Remover fundo branco padrão do Clerk na navbar mas manter fundo escuro do projeto */
+.settings-account-section .cl-navbar > div:not(.cl-userButton):not(.cl-userPreview):not(.cl-navbarButtonActive),
+.settings-account-section .cl-navbar .cl-navbarContent,
+.settings-account-section .cl-navbar .cl-navbarHeader {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Garantir que a navbar tenha o fundo escuro do projeto */
+.settings-account-section .cl-navbar {
+  background-color: rgba(17, 20, 29, 0.4) !important;
+  background: rgba(17, 20, 29, 0.4) !important;
+}
+
+/* Container principal da navbar deve ter fundo escuro */
+.settings-account-section .cl-navbar > div:first-child,
+.settings-account-section .cl-navbarContent {
+  background-color: rgba(17, 20, 29, 0.4) !important;
+  background: rgba(17, 20, 29, 0.4) !important;
+}
+
+/* Forçar cor de fundo escura para o conteúdo da página do Clerk - mesma cor da sidebar */
+.settings-account-section .cl-pageScrollBox,
+.settings-account-section .cl-pageContent {
+  background-color: rgba(17, 20, 29, 0.4) !important;
+}
+
+/* Remover qualquer fundo branco padrão do Clerk */
+.settings-account-section .cl-section,
+.settings-account-section .cl-sectionContent,
+.settings-account-section .cl-profileSection,
+.settings-account-section .cl-profileSectionContent {
+  background-color: transparent !important;
+  color: #f8fafc !important;
+}
+
+/* Garantir que cards e containers do Clerk usem fundo escuro */
+.settings-account-section .cl-cardBox,
+.settings-account-section .cl-cardBoxContent,
+.settings-account-section .cl-main {
+  background-color: transparent !important;
+}
+
+/* Estilos adicionais para padronizar cores do Clerk com o tema Nexus */
+.settings-account-section [class*="cl-"] {
+  color-scheme: dark !important;
+  color: white;
+}
+
+/* Remover fundo branco de elementos específicos do Clerk que podem ter fundo padrão branco */
+.settings-account-section .cl-page > *,
+.settings-account-section .cl-cardBox > *,
+.settings-account-section .cl-main > * {
+  background-color: transparent !important;
+}
+
+/* Garantir que elementos de layout do Clerk não tenham fundo branco */
+.settings-account-section [class*="cl-"]:not([class*="cl-button"]):not([class*="cl-input"]):not([class*="cl-select"]):not([class*="cl-alert"]):not([class*="cl-badge"]):not([class*="cl-tag"]) {
+  background-color: transparent !important;
+}
+
+/* Ajustar cores de texto e fundo padrão do Clerk */
+.settings-account-section .cl-card,
+.settings-account-section .cl-rootBox {
+  background: transparent !important;
+  color: #f8fafc !important;
+}
+
+/* Ajustar textos específicos para branco */
+.settings-account-section .cl-headerTitle,
+.settings-account-section .cl-headerSubtitle,
+.settings-account-section .cl-formFieldLabel,
+.settings-account-section .cl-accordionTriggerButton,
+.settings-account-section .cl-accordionContent,
+.settings-account-section .cl-tableHead,
+.settings-account-section .cl-tableBody,
+.settings-account-section .cl-navbarButton,
+.settings-account-section .cl-dividerText,
+.settings-account-section .cl-alertText,
+.settings-account-section .cl-identityPreviewText,
+.settings-account-section .cl-sectionTitle,
+.settings-account-section .cl-sectionSubtitle,
+.settings-account-section p[class*="cl-"],
+.settings-account-section span[class*="cl-"],
+.settings-account-section div[class*="cl-"]:not([class*="cl-button"]):not([class*="cl-input"]):not([class*="cl-select"]):not([class*="cl-badge"]):not([class*="cl-tag"]) {
+  color: #f8fafc !important;
+}
+
+/* Ajustar botões secundários do Clerk */
+.settings-account-section .cl-button[class*="secondary"],
+.settings-account-section .cl-button[class*="ghost"] {
+  color: #f8fafc !important;
+  background: transparent !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+  transition: all 0.2s ease !important;
+}
+
+.settings-account-section .cl-button[class*="secondary"]:hover,
+.settings-account-section .cl-button[class*="ghost"]:hover {
+  background: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+}
+
+/* Hover para botão Update Profile (formButtonPrimary) - mesmo estilo da navbar */
+.settings-account-section .cl-formButtonPrimary,
+.settings-account-section button[class*="formButtonPrimary"],
+.settings-account-section [class*="cl-formButtonPrimary"] {
+  transition: all 0.2s ease !important;
+}
+
+.settings-account-section .cl-formButtonPrimary:hover,
+.settings-account-section button[class*="formButtonPrimary"]:hover,
+.settings-account-section [class*="cl-formButtonPrimary"]:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+}
+
+/* Hover para botão Delete Account (formButtonDanger) - mesmo estilo da navbar */
+.settings-account-section .cl-formButtonDanger,
+.settings-account-section button[class*="formButtonDanger"],
+.settings-account-section [class*="cl-formButtonDanger"],
+.settings-account-section button[class*="danger"] {
+  transition: all 0.2s ease !important;
+}
+
+.settings-account-section .cl-formButtonDanger:hover,
+.settings-account-section button[class*="formButtonDanger"]:hover,
+.settings-account-section [class*="cl-formButtonDanger"]:hover,
+.settings-account-section button[class*="danger"]:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+}
+
+/* Hover para botão Connect Account (formButtonSecondary ou link buttons) - mesmo estilo da navbar */
+.settings-account-section .cl-formButtonSecondary,
+.settings-account-section button[class*="formButtonSecondary"],
+.settings-account-section [class*="cl-formButtonSecondary"],
+.settings-account-section a[class*="connect"],
+.settings-account-section button[class*="connect"],
+.settings-account-section [class*="connectAccount"] {
+  transition: all 0.2s ease !important;
+}
+
+.settings-account-section .cl-formButtonSecondary:hover,
+.settings-account-section button[class*="formButtonSecondary"]:hover,
+.settings-account-section [class*="cl-formButtonSecondary"]:hover,
+.settings-account-section a[class*="connect"]:hover,
+.settings-account-section button[class*="connect"]:hover,
+.settings-account-section [class*="connectAccount"]:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+}
+
+/* Estilos gerais para botões de ação do Clerk - garantir hover consistente */
+.settings-account-section button[class*="cl-"]:not([disabled]):hover,
+.settings-account-section .cl-button:not([disabled]):hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Hover específico para botões de perfil e ações */
+.settings-account-section [class*="profile"] button:hover,
+.settings-account-section [class*="Profile"] button:hover,
+.settings-account-section [class*="account"] button:hover,
+.settings-account-section [class*="Account"] button:hover,
+.settings-account-section a[role="button"]:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Garantir que links que funcionam como botões também tenham hover */
+.settings-account-section a[class*="cl-"]:not([class*="cl-formResendCodeLink"]):not([class*="cl-footerActionLink"]):hover,
+.settings-account-section [class*="connectAccount"]:hover,
+.settings-account-section [class*="deleteAccount"]:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+  color: #f8fafc !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Ajustar inputs e selects */
+.settings-account-section .cl-input,
+.settings-account-section .cl-select,
+.settings-account-section .cl-textarea {
+  background: rgba(47, 50, 65, 0.6) !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+  color: #f8fafc !important;
+}
+
+.settings-account-section .cl-input:focus,
+.settings-account-section .cl-select:focus,
+.settings-account-section .cl-textarea:focus {
+  border-color: #5b8def !important;
+  box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.1) !important;
+}
+
+/* Ajustar links */
+.settings-account-section a[class*="cl-"] {
+  color: #5b8def !important;
+}
+
+.settings-account-section a[class*="cl-"]:hover {
+  color: #4a7bc8 !important;
+}
+
+/* Ajustar badges e tags */
+.settings-account-section .cl-badge,
+.settings-account-section .cl-tag {
+  background: rgba(91, 141, 239, 0.15) !important;
+  color: #5b8def !important;
+}
+
+/* Ajustar modais e overlays do Clerk */
+.settings-account-section .cl-modalContent,
+.settings-account-section .cl-modalOverlay {
+  background: rgba(30, 33, 46, 0.95) !important;
+}
+
+/* Ajustar avisos e alertas */
+.settings-account-section .cl-alert {
+  background: rgba(47, 50, 65, 0.6) !important;
+  border-color: rgba(61, 65, 82, 0.6) !important;
+  color: #b8b8b8 !important;
+}
+
+.settings-account-section .cl-alert[class*="error"] {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #ef4444 !important;
+}
+
+.settings-account-section .cl-alert[class*="success"] {
+  background: rgba(52, 211, 153, 0.1) !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  color: #34d399 !important;
+}
+
+/* Ajustar scrollbars do Clerk para seguir o padrão do Nexus */
+.settings-account-section [class*="cl-"]::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.settings-account-section [class*="cl-"]::-webkit-scrollbar-track {
+  background: rgba(38, 41, 56, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+.settings-account-section [class*="cl-"]::-webkit-scrollbar-thumb {
+  background: rgba(91, 141, 239, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+.settings-account-section [class*="cl-"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 141, 239, 0.5) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .settings-modal-container {
+    width: 95%;
+    height: 90vh;
+    min-height: 500px;
+    max-height: 90vh;
+    flex-direction: column;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    padding: 16px 0;
+  }
+
+  .settings-categories {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .settings-category-item {
+    white-space: nowrap;
+    min-width: fit-content;
+    padding: 8px 16px;
+  }
+
+  .settings-content-header {
+    padding: 20px;
+  }
+
+  .settings-content-title {
+    font-size: 1.25rem;
+  }
+
+  .settings-content-body {
+    padding: 20px;
+  }
+}

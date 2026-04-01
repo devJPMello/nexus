@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -X POST http://localhost:3000/agents/chat -H \"Content-Type: application/json\" -d \"{\"\"message\"\": \"\"Me fale sobre IA\"\", \"\"agentType\"\": \"\"summary\"\"}\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

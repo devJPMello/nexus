@@ -1,0 +1,56 @@
+.loading-dots-container {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.loading-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+/* Tamanhos */
+.dot.small {
+  width: 6px;
+  height: 6px;
+}
+
+.dot.medium {
+  width: 8px;
+  height: 8px;
+}
+
+.dot.large {
+  width: 10px;
+  height: 10px;
+}
+
+/* Delays para criar efeito de onda */
+.dot-1 {
+  animation-delay: -0.32s;
+}
+
+.dot-2 {
+  animation-delay: -0.16s;
+}
+
+.dot-3 {
+  animation-delay: 0s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  40% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}

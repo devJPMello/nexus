@@ -1,0 +1,64 @@
+.floating-hamburger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: #8b5cf6;
+  border: none;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.floating-hamburger:hover {
+  background: #7c3aed;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+.floating-hamburger:active {
+  transform: scale(0.95);
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: #252836;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.floating-hamburger.open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.floating-hamburger.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.floating-hamburger.open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Hide on desktop when sidebar is open */
+@media (min-width: 769px) {
+  .floating-hamburger {
+    display: none;
+  }
+}
+
+/* Show on mobile */
+@media (max-width: 768px) {
+  .floating-hamburger {
+    display: flex;
+  }
+}

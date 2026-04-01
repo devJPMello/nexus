@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Pessoa do meio (central) -->
+  <g>
+    <!-- Cabeça -->
+    <circle cx="256" cy="140" r="60" fill="#f0f0f0"/>
+
+    <!-- Corpo -->
+    <path d="M256 210 C256 210 180 220 160 280 L160 380 C160 400 170 420 190 420 L322 420 C342 420 352 400 352 380 L352 280 C332 220 256 210 256 210 Z"
+          fill="#f0f0f0"/>
+  </g>
+
+  <!-- Pessoa da esquerda -->
+  <g opacity="0.85">
+    <!-- Cabeça -->
+    <circle cx="120" cy="160" r="50" fill="#f0f0f0"/>
+
+    <!-- Corpo -->
+    <path d="M120 220 C120 220 60 228 45 280 L45 360 C45 375 52 390 67 390 L170 390 C170 390 165 350 165 320 C165 290 150 250 120 220 Z"
+          fill="#f0f0f0"/>
+  </g>
+
+  <!-- Pessoa da direita -->
+  <g opacity="0.85">
+    <!-- Cabeça -->
+    <circle cx="392" cy="160" r="50" fill="#f0f0f0"/>
+
+    <!-- Corpo -->
+    <path d="M392 220 C392 220 452 228 467 280 L467 360 C467 375 460 390 445 390 L342 390 C342 390 347 350 347 320 C347 290 362 250 392 220 Z"
+          fill="#f0f0f0"/>
+  </g>
+</svg>

@@ -1,0 +1,228 @@
+
+:root {
+  --color-darkest: #122C34;
+  --color-dark: #224870;
+  --color-mid: #2A4494;
+  --color-light: #4EA5D9;
+  --color-lightest: #44CFCB;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, var(--color-darkest) 0%, var(--color-dark) 35%, var(--color-mid) 70%, var(--color-light) 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, system-ui, sans-serif;
+}
+
+.login-left-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-right-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--color-light);
+}
+
+.login-title {
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--color-darkest);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+  color: #607489;
+  font-size: 0.98rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+
+.logo-img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25));
+}
+
+
+.welcome-wrap {
+  text-align: center;
+  color: white;
+}
+
+.clerk-signin-wrapper {
+  margin-top: 1rem;
+}
+
+.clerk-signin-wrapper .cl-card {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.clerk-signin-wrapper .cl-formButtonPrimary {
+  background-color: var(--color-mid) !important;
+  border-radius: 14px !important;
+  height: 54px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.clerk-signin-wrapper .cl-formButtonPrimary:hover {
+  background-color: var(--color-dark) !important;
+  transform: translateY(-1px) !important;
+}
+
+.clerk-signin-wrapper .cl-socialButtonsBlockButton {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 14px !important;
+  height: 54px !important;
+  color: #374151 !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.clerk-signin-wrapper .cl-socialButtonsBlockButton:hover {
+  background-color: #f9fafb !important;
+  border-color: #d1d5db !important;
+  transform: translateY(-1px) !important;
+}
+
+.clerk-signin-wrapper .cl-formFieldInput {
+  border: 1px solid #d1d5db !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+  transition: all 0.2s ease !important;
+}
+
+.clerk-signin-wrapper .cl-formFieldInput:focus {
+  border-color: var(--color-mid) !important;
+  box-shadow: 0 0 0 3px rgba(42, 68, 148, 0.1) !important;
+  outline: none !important;
+}
+
+.clerk-signin-wrapper .cl-footerActionLink {
+  color: var(--color-mid) !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.clerk-signin-wrapper .cl-footerActionLink:hover {
+  color: var(--color-dark) !important;
+}
+
+.clerk-signin-wrapper .cl-dividerLine {
+  background-color: #e5e7eb !important;
+}
+
+.clerk-signin-wrapper .cl-dividerText {
+  color: #6b7280 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+@media (max-width: 1024px) {
+  .login-card {
+    max-width: 500px;
+    padding: 2.5rem 2rem;
+  }
+  
+  .login-title {
+    font-size: 2rem;
+  }
+  
+  .logo-img {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  
+  .login-left-side {
+    padding: 1.5rem;
+  }
+  
+  .login-right-side {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 1.5rem;
+  }
+  
+  .login-card {
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .login-title {
+    font-size: 1.75rem;
+  }
+  
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .logo-img {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-left-side,
+  .login-right-side {
+    padding: 1rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+  
+  .login-title {
+    font-size: 1.5rem;
+  }
+  
+  .login-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .logo-img {
+    max-width: 250px;
+  }
+  
+  .clerk-signin-wrapper .cl-formButtonPrimary,
+  .clerk-signin-wrapper .cl-socialButtonsBlockButton {
+    height: 48px !important;
+    font-size: 14px !important;
+  }
+}
