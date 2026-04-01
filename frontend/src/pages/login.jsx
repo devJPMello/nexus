@@ -1,12 +1,9 @@
 import React from "react";
 import { SignIn } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
 import logoWhite from "../assets/images/logo-branca.svg";
 import "./login.css";
 
 const LoginScreen = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="login-container">
       <div className="login-left-side">
@@ -14,7 +11,12 @@ const LoginScreen = () => {
           <h1 className="login-title">Bem-vindo de volta</h1>
           <p className="login-subtitle">Escolha uma opção para continuar</p>
           <div className="clerk-signin-wrapper">
-            <SignIn 
+            <SignIn
+              routing="path"
+              path="/login"
+              signInUrl="/login"
+              signUpUrl="/login"
+              fallbackRedirectUrl="/"
               appearance={{
                 elements: {
                   formButtonPrimary: {
@@ -63,8 +65,6 @@ const LoginScreen = () => {
                   }
                 }
               }}
-              redirectUrl="/"
-              afterSignInUrl="/"
             />
           </div>
         </div>

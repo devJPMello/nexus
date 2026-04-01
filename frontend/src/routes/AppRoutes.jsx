@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth, useUser } from '@clerk/clerk-react';
+import { useAuth, useUser, AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
 import ChatInterface from '../components/chat/ChatInterface';
 import LoginScreen from '../pages/login.jsx';
 import WelcomeAnimation from '../components/WelcomeAnimation';
+
+/** OAuth / SSO: o Clerk redireciona para estes paths; sem rota dedicada cai no 404 da SPA. */
+function ClerkOAuthCallback() {
+  return (
+    <AuthenticateWithRedirectCallback
+      signInUrl="/login"
+      signUpUrl="/login"
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
+    />
+  );
+}
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -80,14 +92,19 @@ const PublicRoute = ({ children }) => {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route 
-        path="/login" 
+      <Route path="/sign-in/sso-callback" element={<ClerkOAuthCallback />} />
+      <Route path="/sign-up/sso-callback" element={<ClerkOAuthCallback />} />
+      <Route path="/login/sso-callback" element={<ClerkOAuthCallback />} />
+      {/* Clerk por defeito usa /sign-in; redireciona para a página real do Nexus */}
+      <Route path="/sign-in" element={<Navigate to="/login" replace />} />
+      <Route
+        path="/login/*"
         element={
           <PublicRoute>
             <LoginScreen />
           </PublicRoute>
-        } 
-      /> 
+        }
+      />
       <Route 
         path="/" 
         element={

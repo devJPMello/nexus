@@ -1,6 +1,5 @@
 # Render Blueprint — monorepo Nexus
-# Dashboard: New → Blueprint → escolher repo → este ficheiro na raiz.
-# Branch: definir ao criar o serviço (main / develop).
+# Produção: front https://nexus-1-yc96.onrender.com | API https://nexus-97mq.onrender.com
 # Não defina PORT: o Render injeta process.env.PORT; Nest usa em backend/src/main.ts.
 
 services:
@@ -30,8 +29,7 @@ services:
       - key: DB_SSL
         value: "true"
       - key: CORS_ORIGINS
-        sync: false
-        # Após deploy: https://nexus-frontend.onrender.com,http://localhost:5173
+        value: https://nexus-1-yc96.onrender.com,http://localhost:5173,http://127.0.0.1:5173
 
   - type: web
     name: nexus-frontend
@@ -46,8 +44,7 @@ services:
         - frontend/**
     envVars:
       - key: VITE_API_URL
-        value: https://nexus-backend.onrender.com
-        # Após 1.º deploy do backend: substituir pela URL real (HTTPS, sem barra final)
+        value: https://nexus-97mq.onrender.com
       - key: VITE_CLERK_PUBLISHABLE_KEY
         sync: false
     routes:
