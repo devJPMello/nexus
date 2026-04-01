@@ -13,12 +13,16 @@ import { UploadedContent } from './content/entities/uploaded-content.entity';
 
 const logger = new Logger('DatabaseConfig');
 
+const isPlaceholderHost = (urlOrHost: string): boolean => {
+  const lower = urlOrHost.toLowerCase();
+  return lower.includes('db.xxx.') || lower.includes('xxx.supabase');
+};
+
 const buildDatabaseConfig = (): TypeOrmModuleOptions => {
-  // Log inicial para debug
-  logger.log('Iniciando configuração do banco de dados...');
-  logger.log(`DATABASE_URL definida: ${!!process.env.DATABASE_URL}`);
-  logger.log(`DB_HOST definido: ${!!process.env.DB_HOST}`);
-  
+  logger.log('Configurando PostgreSQL (TypeORM)...');
+  logger.log(`DATABASE_URL definida: ${!!process.env.DATABASE_URL?.trim()}`);
+  logger.log(`DB_HOST definido: ${!!process.env.DB_HOST?.trim()}`);
+
   const sslEnabled = process.env.DB_SSL !== 'false';
 
   const baseConfig: TypeOrmModuleOptions = {
@@ -36,104 +40,34 @@ const buildDatabaseConfig = (): TypeOrmModuleOptions => {
       : undefined,
   };
 
-  if (process.env.DATABASE_URL?.trim()) {
-    const dbUrl = process.env.DATABASE_URL.trim();
-    
-    // Log para debug (mostra primeiros e últimos caracteres, sem expor senha completa)
-    const urlPreview = dbUrl.length > 50 
-      ? `${dbUrl.substring(0, 30)}...${dbUrl.substring(dbUrl.length - 20)}`
-      : dbUrl.substring(0, 20) + '...';
-    logger.log(`DATABASE_URL recebida (preview): ${urlPreview}`);
-    
-    // Tentar parsear a URL manualmente para evitar problemas de parsing do TypeORM
-    try {
-      // Remover o protocolo
-      const withoutProtocol = dbUrl.replace(/^(?:postgresql|postgres):\/\//, '');
-      
-      // Encontrar o último @ (separa credenciais do host)
-      const atIndex = withoutProtocol.lastIndexOf('@');
-      if (atIndex === -1) {
-        throw new Error('DATABASE_URL não contém @ separando credenciais do host');
-      }
-      
-      const credentials = withoutProtocol.substring(0, atIndex);
-      const hostAndPath = withoutProtocol.substring(atIndex + 1);
-      
-      // Separar user:password
-      const colonIndex = credentials.indexOf(':');
-      if (colonIndex === -1) {
-        throw new Error('DATABASE_URL não contém : separando usuário e senha');
-      }
-      
-      const username = decodeURIComponent(credentials.substring(0, colonIndex));
-      const password = decodeURIComponent(credentials.substring(colonIndex + 1));
-      
-      // Separar host:port/database
-      const pathMatch = hostAndPath.match(/^([^:\/]+)(?::(\d+))?\/(.+)$/);
-      if (!pathMatch) {
-        throw new Error('DATABASE_URL não contém formato host:port/database válido');
-      }
-      
-      const [, host, port, database] = pathMatch;
-      const parsedPort = port ? parseInt(port, 10) : 5432;
-      const parsedDatabase = decodeURIComponent(database);
-      
-      // Validar que o host não é "base" ou inválido
-      if (!host || host === 'base' || host.length < 3) {
-        throw new Error(
-          `Host extraído da DATABASE_URL é inválido: "${host}". Verifique se a URL está completa. Supabase: Settings > Database > Connection string (URI).`,
-        );
-      }
-      
-      // Log parcial para debug (sem senha completa)
-      logger.log(
-        `Conectando ao banco: ${host}:${parsedPort}/${parsedDatabase} (usuário: ${username})`,
-      );
-      
-      return {
-        ...baseConfig,
-        host,
-        port: parsedPort,
-        username,
-        password,
-        database: parsedDatabase,
-      };
-    } catch (error) {
-      // Se não conseguir parsear, verificar se a URL parece válida antes de usar como fallback
-      const errorMsg = error instanceof Error ? error.message : 'erro desconhecido';
-      logger.error(
-        `Erro ao parsear DATABASE_URL: ${errorMsg}`,
-      );
-      
-      // Verificar se a URL parece válida (contém @ e /)
-      if (!dbUrl.includes('@') || !dbUrl.includes('/')) {
-        throw new Error(
-          `DATABASE_URL inválida: não foi possível parsear e formato parece incorreto. ` +
-            `Erro: ${errorMsg}. ` +
-            `Verifique se está usando a connection string completa do Supabase (Settings > Database > Connection string > URI).`,
-        );
-      }
-      
-      // Se parece válida mas não conseguimos parsear, NÃO usar como fallback
-      // Lançar erro para forçar correção da URL
+  const databaseUrl = process.env.DATABASE_URL?.trim();
+  if (databaseUrl) {
+    if (isPlaceholderHost(databaseUrl)) {
       throw new Error(
-        `DATABASE_URL não pôde ser parseada corretamente. ` +
-          `Erro: ${errorMsg}. ` +
-          `URL recebida (preview): ${urlPreview}. ` +
-          `Verifique se está usando a connection string completa do Supabase. ` +
-          `No Supabase: Settings > Database > Connection string > URI (não Session). ` +
-          `Formato esperado: postgresql://user:password@host:port/database`,
+        'DATABASE_URL parece ser um exemplo (contém xxx ou placeholder). ' +
+          'Use a connection string real do PostgreSQL (Render → Database → Connections, ou Supabase/Neon URI).',
       );
     }
-  }
-  
-  // Se não há DATABASE_URL, verificar se há variáveis individuais
-  logger.warn('DATABASE_URL não encontrada, usando variáveis DB_* individuais');
+    const preview =
+      databaseUrl.length > 55
+        ? `${databaseUrl.slice(0, 28)}...${databaseUrl.slice(-22)}`
+        : `${databaseUrl.slice(0, 24)}...`;
+    logger.log(`DATABASE_URL (preview): ${preview}`);
 
-  const host = process.env.DB_HOST;
-  if (!host || host === 'base') {
+    // URL única: driver `pg` faz o parse (passwords com caracteres especiais, etc.)
+    return {
+      ...baseConfig,
+      url: databaseUrl,
+    };
+  }
+
+  logger.warn('DATABASE_URL vazia; a usar DB_HOST / DB_USERNAME / DB_PASSWORD / DB_DATABASE');
+
+  const host = process.env.DB_HOST?.trim();
+  if (!host || host === 'base' || isPlaceholderHost(host)) {
     throw new Error(
-      `DB_HOST inválido: "${host}". Use o host do banco (ex: db.XXXXX.supabase.co). Não use "base" sozinho. Se usar Supabase, prefira DATABASE_URL com a connection string completa.`,
+      'Configure PostgreSQL: defina DATABASE_URL (recomendado) ou DB_HOST, DB_USERNAME, DB_PASSWORD e DB_DATABASE. ' +
+        'No Render, ligue o Postgres ao Web Service ou copie a External Database URL.',
     );
   }
 
