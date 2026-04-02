@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import historyIcon from '../assets/images/historia.svg';
+import { BRANDING } from '../constants/brandingUrls';
 import { getFrontendAgentId } from '../constants/agentTypes';
 import './HistoryOffCanvas.css';
 
@@ -89,7 +89,7 @@ const HistoryOffCanvas = ({
     if (!hasHistory) {
       return (
         <div className="history-empty">
-          <img src={historyIcon} alt="Histórico vazio" className="history-empty-icon" />
+          <img src={BRANDING.historia} alt="Histórico vazio" className="history-empty-icon" />
           <p>Suas interações aparecerão aqui assim que você conversar com um agente.</p>
         </div>
       );

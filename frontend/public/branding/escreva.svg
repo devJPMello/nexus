@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Balão de diálogo/chat -->
+  <g>
+    <!-- Balão principal -->
+    <rect x="80" y="100" width="320" height="240" rx="40" fill="#f0f0f0"/>
+
+    <!-- Ponta do balão (inferior esquerda) -->
+    <path d="M 140 340 L 100 380 L 160 340 Z" fill="#f0f0f0"/>
+
+    <!-- Linhas de texto dentro do balão -->
+    <line x1="140" y1="170" x2="340" y2="170" stroke="#2a2d3a" stroke-width="16" stroke-linecap="round"/>
+    <line x1="140" y1="220" x2="320" y2="220" stroke="#2a2d3a" stroke-width="16" stroke-linecap="round"/>
+    <line x1="140" y1="270" x2="360" y2="270" stroke="#2a2d3a" stroke-width="16" stroke-linecap="round"/>
+  </g>
+</svg>

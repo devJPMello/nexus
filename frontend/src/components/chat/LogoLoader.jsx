@@ -1,11 +1,11 @@
-import logoBranca from '../../assets/images/logo-branca.svg';
+import { BRANDING } from '../../constants/brandingUrls';
 import './LogoLoader.css';
 
 const LogoLoader = () => {
   return (
     <div className="logo-loader">
       <div className="logo-container">
-        <img src={logoBranca} alt="Logo" className="pulsing-logo" />
+        <img src={BRANDING.logoWhite} alt="Logo" className="pulsing-logo" />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { SignIn } from "@clerk/clerk-react";
-import logoWhite from "../assets/images/logo-branca.svg";
+import { BRANDING } from '../constants/brandingUrls';
 import "./login.css";
 
 const LoginScreen = () => {
@@ -72,7 +72,7 @@ const LoginScreen = () => {
 
       <div className="login-right-side">
         <div className="welcome-wrap">
-          <img src={logoWhite} alt="Logo" className="logo-img" />
+          <img src={BRANDING.logoWhite} alt="Logo" className="logo-img" />
         </div>
       </div>
     </div>

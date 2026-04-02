@@ -12,7 +12,7 @@ import Summaries from './Summaries';
 import apiService from '../../services/api';
 import { getBackendAgentType, getFrontendAgentId } from '../../constants/agentTypes';
 import './ChatInterface.css';
-import historyIcon from '../../assets/images/historia.svg';
+import { BRANDING } from '../../constants/brandingUrls';
 
 const parseTimestamp = (value) => {
   if (!value) return null;
@@ -1052,7 +1052,7 @@ const ChatInterface = () => {
         onClick={handleToggleHistory}
         aria-label={isHistoryOpen ? 'Fechar histórico' : 'Abrir histórico de interações'}
       >
-        <img src={historyIcon} alt="" aria-hidden="true" />
+        <img src={BRANDING.historia} alt="" aria-hidden="true" />
       </button>
     </div>
   );

@@ -3,7 +3,7 @@ import MessageInput from '../MessageInput';
 import MarkdownRenderer from '../MarkdownRenderer';
 import LogoLoader from './LogoLoader';
 import './Summaries.css';
-import pencilIcon from '../../assets/pencil-svgrepo-com.svg';
+import { BRANDING } from '../../constants/brandingUrls';
 import { jsPDF } from 'jspdf';
 
 const Summaries = ({ onSendMessage, onEditMessage, onCancelGeneration, onBackToDashboard, sidebarOpen, messages = [], processingStates = {} }) => {
@@ -649,7 +649,7 @@ const Summaries = ({ onSendMessage, onEditMessage, onCancelGeneration, onBackToD
                           onClick={() => handleStartEdit(message.id, message.text)}
                           title="Editar"
                         >
-                          <img src={pencilIcon} alt="Editar" style={{ width: '16px', height: '16px', filter: 'invert(1)' }} />
+                          <img src={BRANDING.pencil} alt="Editar" style={{ width: '16px', height: '16px', filter: 'invert(1)' }} />
                         </button>
                       </div>
                     )}

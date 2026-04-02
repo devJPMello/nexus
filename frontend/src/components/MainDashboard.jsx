@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import anime from 'animejs';
 import './MainDashboard.css';
-import mapeamentoIcon from '../assets/images/mapeamento-da-mente.svg';
-import contratoIcon from '../assets/images/contrato.svg';
+import { BRANDING } from '../constants/brandingUrls';
 import { getBackendAgentType } from '../constants/agentTypes';
 import MessageInput from './MessageInput';
 
@@ -119,7 +118,7 @@ const MainDashboard = ({ onSelectAgent, onToggleSidebar, sidebarOpen, onSendMess
                   ref={(el) => iconsRef.current[0] = el}
                 >
                   <img
-                    src={mapeamentoIcon}
+                    src={BRANDING.mapeamento}
                     alt="Mapeamento da Mente"
                     width="20"
                     height="20"
@@ -165,7 +164,7 @@ const MainDashboard = ({ onSelectAgent, onToggleSidebar, sidebarOpen, onSendMess
                   ref={(el) => iconsRef.current[1] = el}
                 >
                   <img
-                    src={contratoIcon}
+                    src={BRANDING.contrato}
                     alt="Contrato"
                     width="20"
                     height="20"

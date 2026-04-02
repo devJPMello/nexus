@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Documento/Papel -->
+  <path d="M96 32c-17.7 0-32 14.3-32 32v384c0 17.7 14.3 32 32 32h224c17.7 0 32-14.3 32-32V128L288 32H96z" fill="#f0f0f0"/>
+
+  <!-- Canto dobrado do papel -->
+  <path d="M288 32v96h64L288 32z" fill="#d0d0d0"/>
+
+  <!-- Linhas do documento (texto) -->
+  <rect x="128" y="192" width="192" height="16" rx="8" fill="#2a2d3a"/>
+  <rect x="128" y="240" width="144" height="16" rx="8" fill="#2a2d3a"/>
+  <rect x="128" y="288" width="160" height="16" rx="8" fill="#2a2d3a"/>
+  <rect x="128" y="336" width="176" height="16" rx="8" fill="#2a2d3a"/>
+  <rect x="128" y="384" width="96" height="16" rx="8" fill="#2a2d3a"/>
+
+  <!-- Caneta -->
+  <g transform="translate(300, 240) rotate(45)">
+    <!-- Corpo da caneta -->
+    <rect x="0" y="0" width="140" height="40" rx="8" fill="#f0f0f0" stroke="#d0d0d0" stroke-width="4"/>
+
+    <!-- Ponta da caneta -->
+    <path d="M140 8 L180 20 L140 32 Z" fill="#d0d0d0"/>
+
+    <!-- Detalhe da caneta -->
+    <rect x="20" y="12" width="100" height="16" rx="4" fill="#e0e0e0"/>
+    <circle cx="30" cy="20" r="6" fill="#d0d0d0"/>
+  </g>
+</svg>

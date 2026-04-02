@@ -1,13 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useUser, useClerk } from '@clerk/clerk-react';
-import arrowLeftIcon from '../assets/arrow-left.svg';
-import arrowRightIcon from '../assets/arrow-right.svg';
 import './Sidebar.css';
-import logoPreta from '../assets/images/logo-branca.svg';
-import comunidadeIcon from '../assets/images/comunidade.svg';
-import mapeamentoIcon from '../assets/images/mapeamento-da-mente.svg';
-import contratoIcon from '../assets/images/contrato.svg';
-import escrevaIcon from '../assets/images/escreva.svg';
+import { BRANDING } from '../constants/brandingUrls';
 import { getBackendAgentType } from '../constants/agentTypes';
 
 
@@ -23,7 +17,7 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
       title: "Chat Geral", 
       icon: (
         <img 
-          src={escrevaIcon} 
+          src={BRANDING.escreva} 
           alt="Escreva" 
           width="16" 
           height="16"
@@ -37,7 +31,7 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
       title: "Plano de Estudos", 
       icon: (
         <img 
-          src={mapeamentoIcon} 
+          src={BRANDING.mapeamento} 
           alt="Mapeamento da Mente" 
           width="16" 
           height="16"
@@ -51,7 +45,7 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
       title: "Resumos",
       icon: (
         <img 
-          src={contratoIcon} 
+          src={BRANDING.contrato} 
           alt="Contrato" 
           width="16" 
           height="16"
@@ -68,7 +62,7 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
       title: "Redes Sociais", 
       icon: (
         <img 
-          src={comunidadeIcon} 
+          src={BRANDING.comunidade} 
           alt="Comunidade" 
           width="16" 
           height="16"
@@ -146,7 +140,7 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
           <div className="logo-section">
             <div className="logo-icon" onClick={onBackToDashboard} style={{ cursor: 'pointer' }}>
               <img
-                src={logoPreta}
+                src={BRANDING.logoWhite}
                 alt="Nexus AI Logo"
                 className="logo-image"
               />
@@ -160,9 +154,9 @@ const Sidebar = ({ isOpen, onToggle, onSelectAgent, currentAgent, onBackToDashbo
             <h3 className="section-title">Agentes</h3>
             <button className="sidebar-toggle-btn" onClick={onToggle} title={isOpen ? 'Fechar sidebar' : 'Abrir sidebar'}>
               {isOpen ? (
-                <img src={arrowLeftIcon} alt="Fechar sidebar" className="arrow-icon" />
+                <img src={BRANDING.arrowLeft} alt="Fechar sidebar" className="arrow-icon" />
               ) : (
-                <img src={arrowRightIcon} alt="Abrir sidebar" className="arrow-icon" />
+                <img src={BRANDING.arrowRight} alt="Abrir sidebar" className="arrow-icon" />
               )}
             </button>
           </div>
