@@ -1,8 +1,8 @@
-/** SVGs servidos de /public/branding — sempre copiados para a raiz do dist no deploy. */
+/** Ficheiros em /public/branding — copiados para a raiz do dist no deploy. */
 const file = (name) => `${import.meta.env.BASE_URL}branding/${name}`;
 
 export const BRANDING = {
-  logoWhite: file('logo-branca.svg'),
+  logoWhite: file('logo-branca.png'),
   historia: file('historia.svg'),
   comunidade: file('comunidade.svg'),
   mapeamento: file('mapeamento-da-mente.svg'),
